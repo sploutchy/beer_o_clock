@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Is it beer o'clock yet?</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    
+	<style>
+	body {text-align: center; font-family: "Comic Sans MS", cursive, sans-serif;}
+	::selection {background: #EF00FF;}
+	h1 {color: blue; font-size: 100pt;}
+	#answer {color: green; font-size: 80pt; font-weight: bold;}
+	#text {color: red; font-size: 50pt;}
+	</style>
+	
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+		var i=0;
+
+		function update() {
+			var params = (window.location.hash.substr(1)).split("|");
+			var time = isNaN(params[0]) ? 10 : params[0];
+			var beer = params.length > 1 ? decodeURIComponent(params[1]) : "beer";
+			var yesorno = (new Date()).getHours() > time ? true : false;
+			ReactDOM.render(
+				beer,
+				document.getElementById('beer')
+			);
+			ReactDOM.render(
+				yesorno ? "YES" : "NO",
+				document.getElementById('answer')
+			);
+			ReactDOM.render(
+				yesorno ? "already" : "only",
+				document.getElementById('thingie')
+			);
+			ReactDOM.render(
+				(new Date()).toLocaleTimeString('de-CH', { hour12: false }),
+				document.getElementById('time')
+			);
+			ReactDOM.render(
+				beer,
+				document.getElementById('beer')
+			);
+			lolBG();
+		}
+		
+		setInterval(update, 30);
+		function lolBG(){
+			var r1 = Math.floor(Math.sin(2*i*Math.PI*Math.PI/1000)*127.5 + 127.5);
+			var r2 = Math.floor(Math.sin(3*i*Math.PI/100)*127.5 + 127.5);
+			var r3 = Math.floor(Math.sin(5*i/100)*127.5 + 127.5);
+
+			i++;
+
+			document.body.style.background="rgb("+r1+","+r2+","+r3+")";
+		}  
+    </script>
+	<h1>Is it <label id="beer"></label> o'clock yet?</h1>
+	<div id="answer"></div>
+	<marquee id="text">It's <label id="thingie"></label> <label id="time"></label></marquee>
+  </body>
+</html>
