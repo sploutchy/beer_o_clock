@@ -26,7 +26,7 @@
 			var params = (window.location.hash.substr(1)).split("|");
 			var time = isNaN(params[0]) ? 10 : params[0];
 			var beer = params.length > 1 ? decodeURIComponent(params[1]) : "beer";
-			var yesorno = (new Date()).getHours() > time ? true : false;
+			var yesorno = (new Date()).getHours() >= time ? true : false;
 			ReactDOM.render(
 				beer,
 				document.getElementById('beer')
